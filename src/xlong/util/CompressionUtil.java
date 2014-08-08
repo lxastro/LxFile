@@ -115,18 +115,19 @@ public final class CompressionUtil {
 	 * Decompress given input file and output to given output file.
 	 * The output directory must exist.
 	 * If the inFile can not decompress, this method will fail.
-	 * If the outFile already exist, this method will do nothing.
+	 * If the outFile already exist, this method will fail.
 	 * 
 	 * @param inFile the input file name
 	 * @param outFile the output file name
 	 * @throws IOException if an I/O error occurs
+	 * @return success or not
 	 */	
-	public static void decompressToFile(
+	public static boolean decompressToFile(
 			final Path inFile, 
 			final Path outFile) 
 					throws IOException {
 		if (Files.exists(outFile)) {
-			return;
+			return false;
 		}
 		
 		byte[] data = toByteArray(inFile);
@@ -145,12 +146,13 @@ public final class CompressionUtil {
 			} catch (DataFormatException e) {
 				e.printStackTrace();
 				out.close();
-				return;
+				return false;
 			}
 			out.write(buffer, 0, count);
 		}
 		inflater.end();
 		out.close();
+		return true;
 	}
 	
 	/**
