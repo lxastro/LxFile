@@ -95,4 +95,11 @@ public final class Leaf extends Container {
 	public void backup() {
 	}
 
+	/**
+	 * @return the blobChecksum
+	 */
+	public String getBlobChecksum() {
+		return blobChecksum;
+	}
+
 }
